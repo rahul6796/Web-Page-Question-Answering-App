@@ -21,7 +21,7 @@ def main():
     print('Vector stor created successfully.')
 
     # 3. Set up the LLM and embeddings
-    # ... .setup_llm_and_embeddings()
+    embeddings = setup_llm_and_embeddings()
 
     # 4. Create the RAG chain
     # ... .create_rag_chain()
@@ -36,8 +36,15 @@ def load_and_process_web_page(web_page_url):
     data = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     docs = text_splitter.split_documents(data)
-    db = Chroma.from_documents(docs, embedding=None)
+    db = Chroma.from_documents(docs, embedding=embeddings)
     return db
+
+# Function to set up the LLM and embeddings
+def setup_llm_and_embeddings():
+    """Initialize the Google Gemini LLM and embeddings."""
+    from langchain.embeddings import GooglePalmEmbeddings
+    embeddings = GooglePalmEmbeddings()
+    return embeddings
 
 # Function to set up the LLM and embeddings
 def setup_llm_and_embeddings():
