@@ -18,6 +18,7 @@ def main():
     web_page_url= get_user_input()
     # 2. Load and process the web page content
     db = load_and_process_web_page(web_page_url)
+    print('Vector stor created successfully.')
 
     # 3. Set up the LLM and embeddings
     # ... .setup_llm_and_embeddings()
