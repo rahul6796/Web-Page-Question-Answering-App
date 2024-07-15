@@ -17,7 +17,7 @@ def main():
     # 1. Collect user input
     web_page_url= get_user_input()
     # 2. Load and process the web page content
-    load_and_process_web_page(web_page_url)
+    db = load_and_process_web_page(web_page_url)
 
     # 3. Set up the LLM and embeddings
     # ... .setup_llm_and_embeddings()
@@ -33,7 +33,10 @@ def load_and_process_web_page(web_page_url):
     """Load the web page content, split it into chunks, and embed them."""
     loader = WebBaseLoader(web_page_url)
     data = loader.load()
-    print(data)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    docs = text_splitter.split_documents(data)
+    db = Chroma.from_documents(docs, embedding=None)
+    return db
 
 # Function to set up the LLM and embeddings
 def setup_llm_and_embeddings():
