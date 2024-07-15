@@ -20,7 +20,7 @@ def main():
     question = input("Enter your question: ")
 
     # 2. Load and process the web page content
-    # ... .load_and_process_web_page(web_page_url)
+    load_and_process_web_page(web_page_url)
 
     # 3. Set up the LLM and embeddings
     # ... .setup_llm_and_embeddings()
@@ -34,8 +34,9 @@ def main():
 # Function to load and process the web page content
 def load_and_process_web_page(web_page_url):
     """Load the web page content, split it into chunks, and embed them."""
-    # ... Implementation to be added
-    pass  # Placeholder for implementation
+    loader = WebBaseLoader(web_page_url)
+    data = loader.load()
+    print(data)
 
 # Function to set up the LLM and embeddings
 def setup_llm_and_embeddings():
