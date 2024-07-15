@@ -3,22 +3,19 @@ import getpass
 
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.document_loaders import WebBaseLoader
-from langchain.embeddings import GoogleVertexAIEmbeddings
-from langchain.llms import GoogleVertexAI
+from langchain_community.document_loaders import WebBaseLoader
 from langchain.prompts import ChatPromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from utils import get_user_input
 
 # Get API keys from environment variables or user input
-os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY") or getpass.getpass("Google API Key:")
+# os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY") or getpass.getpass("Google API Key:")
 
 def main():
     """Main function to run the RAG application."""
     # 1. Collect user input
-    web_page_url = input("Enter the URL of the web page: ")
-    question = input("Enter your question: ")
-
+    web_page_url= get_user_input()
     # 2. Load and process the web page content
     load_and_process_web_page(web_page_url)
 
