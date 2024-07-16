@@ -7,13 +7,17 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from utils import get_user_input
 import google.generativeai as genai
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+
 
 def main():
     """Main function to run the RAG application."""
@@ -50,13 +54,15 @@ def setup_llm_and_embeddings():
 # Function to set up the LLM and embeddings
 def setup_llm():
     """Initialize the Google Gemini LLM and embeddings."""
-    # ... Implementation to be added
-    pass  # Placeholder for implementatison
+    model = ChatGoogleGenerativeAI(model="gemini-pro",
+                                   temperature=0.3)
+
+    return model
 
 # Function to create the RAG chain
 def create_rag_chain():
     """Create the Retrieval Augmented Generation (RAG) chain."""
-    # ... Implementation to be added
+    
     pass  # Placeholder for implementation
 
 # Function to run the chain and display the answer
