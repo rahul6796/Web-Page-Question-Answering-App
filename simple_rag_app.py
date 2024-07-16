@@ -8,11 +8,12 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from utils import get_user_input
+import google.generativeai as genai
+
 from dotenv import load_dotenv
 load_dotenv()
 
-# Get API keys from environment variables or user input
-os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY")
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 def main():
     """Main function to run the RAG application."""
@@ -22,7 +23,7 @@ def main():
     # 2. Load and process the web page content
     db = load_and_process_web_page(web_page_url, embeddings)
     print('Vector stor created successfully.')
-    
+
     # 4. Create the RAG chain
     # ... .create_rag_chain()
 
@@ -42,14 +43,12 @@ def load_and_process_web_page(web_page_url, embeddings):
 # Function to set up the LLM and embeddings
 def setup_llm_and_embeddings():
     """Initialize the Google Gemini LLM and embeddings."""
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
-    print('----------')
-    print(embeddings)
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001") 
     return embeddings
 
 
 # Function to set up the LLM and embeddings
-def setup_llm_and_embeddings():
+def setup_llm():
     """Initialize the Google Gemini LLM and embeddings."""
     # ... Implementation to be added
     pass  # Placeholder for implementatison
