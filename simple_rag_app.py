@@ -8,6 +8,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.chains.question_answering import load_qa_chain
+from langchain.prompts import PromptTemplate
 
 from utils import get_user_input
 import google.generativeai as genai
@@ -61,9 +63,24 @@ def setup_llm():
 
 # Function to create the RAG chain
 def create_rag_chain():
-    """Create the Retrieval Augmented Generation (RAG) chain."""
+    prompt_template = """
+    Answer the question as detailed as possible from the provided context, make sure to 
+    provide  all the details, if the answer is not in provided context just say, "answer is not
+    available in the context", do not provide the wrong answer\n\n
+    Context: \n{context}?\n
+    Question: \n{question}\n
     
-    pass  # Placeholder for implementation
+    Answer:
+    """
+
+    model = ChatGoogleGenerativeAI(model="gemini-pro",
+                                   temperature=0.3)
+    prompt = PromptTemplate(template=prompt_template,
+                            input_variables=["context", "question"])
+
+    chain = load_qa_chain(model, chain_type="stuff",
+                          prompt=prompt)
+    return chain
 
 # Function to run the chain and display the answer
 def run_chain_and_display_answer(question):
